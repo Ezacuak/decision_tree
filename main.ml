@@ -18,6 +18,7 @@
 #use "learn.ml";; (* Phase d'apprentissage *)
 #use "test.ml";;  (* Phase de test *)
 
+open List;;
 (***********************************************)
 (**                                           **)
 (**     Définition des types & structures     **)
@@ -52,6 +53,12 @@ type document = data list
 (*************************************)
 
 
+let get_word_list_from_doc doc =
+    let rec aux doc l = match doc with
+    | [] -> l
+    | (words, _)::t -> aux t (l @ (filter (fun e -> not (mem e l)) words)))
+    in aux doc []
+
 
 (**************************)
 (**                      **)
@@ -59,6 +66,28 @@ type document = data list
 (**                      **)
 (**************************)
 
+let doc_1 = [
+    (["mange"; "chocolat"; "toto"; "bras"], true);
+    (["école"; "maîtresse"; "toto"], true);
+    (["mange"; "chocolat"; "toto"; "maîtresse"], true);
+    (["maîtresse"; "mange"], false);
+    (["toto"; "chocolat"; "maîtresse"], true);
+    (["chocolat"; "maîtresse"; "bras"], false);
+]
+
+let doc_1_tree = Node("mange",
+    Node("chocolat",
+        Leaf true,
+        Leaf false
+    ),
+    Node("chocolat", 
+        Node("toto",
+            Leaf true,
+            Leaf false
+        ),
+        Leaf false
+    )
+)
 let sport_doc = [
     (["tournoi"; "Irlande";"retrouver";"goût"; "victoire"], true);
     (["ligue"; "champion";"Paris";"demi-finale"], true);
