@@ -29,6 +29,10 @@ type decision_tree =
     | Leaf of bool
     | Node of string * decision_tree * decision_tree
 
+(* NOTE: Format des donnée sous la forme suivante: *)
+(*
+
+*)
 
 let () = print_endline "Hello World !"
 

@@ -23,5 +23,18 @@ des documents utilisé pour cette phase est appelé Doc_appr (documents d’appr
         2. Ponderation des mots par leurs presence dans le corpus
 *)
 
+(* Lecture d'un document *)
+let data_dir = "data/"
+let file_name = "doc_1.txt"
 
-let () = print_endline "Phase d'apprentissage"
+let () =
+    let file = data_dir ^ file_name in
+    let ic = open_in file in
+    try
+        let line = input_line ic in
+        print_endline line;
+        flush stdout;
+        close_in ic;
+    with e ->
+        close_in_noerr ic;
+        raise e;
