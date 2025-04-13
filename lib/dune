@@ -1,2 +1,3 @@
 (library
- (name d_tree))
+ (name d_tree)
+ (modules types))

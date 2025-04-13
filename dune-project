@@ -20,6 +20,7 @@
  (synopsis "A short synopsis")
  (description "A longer description")
  (depends ocaml)
+ (allow_empty true)
  (tags
   ("add topics" "to describe" your project)))
 
