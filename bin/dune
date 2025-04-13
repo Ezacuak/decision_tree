@@ -1,0 +1,4 @@
+(executable
+ (public_name d_tree)
+ (name main)
+ (libraries d_tree))
