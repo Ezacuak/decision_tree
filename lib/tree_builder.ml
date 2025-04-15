@@ -1,5 +1,5 @@
 open Types
-
+open Utils
 
 let get_word_list_from_doc doc =
   let rec aux doc l =
@@ -26,7 +26,6 @@ let build_tree_naif d =
   let rec aux d l =
     match d with
     | [] -> Empty
-    | [ (_, s) ] -> Leaf s
     | (_, s) :: _ when is_pure d -> Leaf s
     | _ -> (
         match l with
@@ -39,3 +38,36 @@ let build_tree_naif d =
   in
   let words = get_word_list_from_doc d in
   aux d words
+
+(*===============================================*)
+(*     Arbre optimiser avec fonction de gain     *)
+(*===============================================*)
+
+(* calcule de l'entropy d'un essemble *)
+let entrpoy d = print_document d; 1
+let gain m d = print_string m; print_document d; 1
+
+
+(* Calucule de meillieur mot pour la separation d'un essemble *)
+let get_best_word d =
+  let rec aux l =
+    match l with
+    | [] -> failwith "No word found"
+    | [h] -> h
+    | h :: t ->
+        let g = gain h d in
+        if g <= gain (aux t) d then h else aux t
+  in
+  let words = get_word_list_from_doc d in
+  aux words
+
+let rec build_tree d =
+  match d with
+  | [] -> Empty
+  | (_, s) :: _ when is_pure d -> Leaf s
+  | _ ->
+      let word = get_best_word d in
+      let yes, no = sous_doc d word in
+      if is_pure yes then Node (word, Leaf true, build_tree no)
+      else if is_pure no then Node (word, build_tree yes, Leaf false)
+      else Node (word, build_tree yes, build_tree no)

@@ -14,5 +14,5 @@
 *)
 
 let () =
-    print_string "Hello, world!\n";
-    print_string "This is a test of the OCaml compiler.\n";
+  print_string "Hello, world!\n";
+  print_string "This is a test of the OCaml compiler.\n"
